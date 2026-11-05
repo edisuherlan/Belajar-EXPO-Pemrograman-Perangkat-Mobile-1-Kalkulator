@@ -1,5 +1,5 @@
 import * as Device from 'expo-device';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Platform, Pressable, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -50,6 +50,7 @@ function namaPlatform() {
 }
 
 export default function HomeScreen() {
+  const router = useRouter();
   const [aktif, setAktif] = useState<TopikId>('teks');
   const dipilih = topik.find((item) => item.id === aktif) ?? topik[0];
 
@@ -110,6 +111,17 @@ export default function HomeScreen() {
               </ThemedText>
             </Pressable>
           </Link>
+
+          <Pressable
+            onPress={() => router.push('/imt')}
+            style={({ pressed }) => [styles.imtMenu, pressed && styles.pressed]}>
+            <ThemedText type="smallBold" style={styles.imtTitle}>
+              Penghitung IMT
+            </ThemedText>
+            <ThemedText type="small" style={styles.imtDesc}>
+              Hitung dan pahami hasil IMT Anda
+            </ThemedText>
+          </Pressable>
 
           {Platform.OS === 'web' && <WebBadge />}
         </ScrollView>
@@ -192,5 +204,20 @@ const styles = StyleSheet.create({
   },
   pressed: {
     opacity: 0.75,
+  },
+  imtMenu: {
+    padding: 18,
+    borderRadius: 14,
+    backgroundColor: '#DDF5EF',
+    borderWidth: 1,
+    borderColor: '#B8E4D9',
+    gap: 6,
+  },
+  imtTitle: {
+    color: '#0F766E',
+    fontSize: 18,
+  },
+  imtDesc: {
+    color: '#395565',
   },
 });
